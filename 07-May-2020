@@ -1,0 +1,110 @@
+#include <bits/stdc++.h>
+using namespace std;
+void leftshift(int a[],int n)
+{
+    int temp=a[0];
+    for(int i=0;i<n-1;i++)
+    {
+        a[i]=a[i+1];
+    }
+    a[n-1]=temp;
+}
+void print(int a[],int n)
+{
+    for(int i=0;i<n;i++)
+    cout<<a[i]<<" ";
+}
+void leftrotate(int a[],int n, int k)
+{
+    k=k%n;
+    int temp[k];
+    for(int i=0;i<k;i++)
+    {
+        temp[i]=a[i];
+    }
+    for(int i=0;i<n-k;i++)
+    {
+        a[i]=a[i+k];
+    }
+    int j=0;
+    for(int i=n-k;i<n;i++)
+    {
+        a[i]=temp[j];
+        j++;
+    }
+}
+void rightrotate(int a[],int n,int k)
+{
+    k=k%n;
+    int temp[k];
+    for(int i=0;i<k;i++)
+    {
+        temp[i]=a[n-k+i];
+    }
+    for(int i=n-1;i>=k;i--)
+    {
+        a[i]=a[i-k];
+    }
+    for(int i=0;i<k;i++)
+    {
+        a[i]=temp[i];
+    }
+}
+int linearsearch(int a[],int n,int k)
+{
+    for(int i=0;i<n;i++)
+    {
+        if(a[i]==k)
+        {
+            return i;
+        }
+    }
+    return -1;
+}
+int binarysearch(int a[],int n,int k)
+{
+    int st=0;
+    int end=n-1;
+    while(st<=end)
+    {
+       // int mid=(st+end)/2;  
+       int mid=st+(end-st)/2;
+        if(a[mid]==k)
+        {
+            return mid;
+        }
+        else{
+            if(a[mid]>k)
+            {
+                end=mid-1;
+            }
+            else{
+                st=mid+1;
+            }
+        }
+    }
+    return -1;
+    }
+int main() {
+    int a[]={1,2,3,4,5,6,8,10,11,15};
+    int n=10;
+    int k=15;
+    int z=binarysearch(a,n,3);
+    int m=INT_MAX;
+    int c=INT_MIN;
+   // cout<<"\nPrinting Maximum and Minimum values "<<c<<" "<<m+2<<endl;
+    //int z=linearsearch(a,n,19);
+    if(z==-1)
+    {
+        cout<<"\nNot Found";
+    }
+    else
+    {
+        cout<<"\nFound at  index "<<z;
+    }
+    cout<<endl;
+   // leftrotate(a,n,14);
+    rightrotate(a,n,31);
+    print(a,n);
+
+}

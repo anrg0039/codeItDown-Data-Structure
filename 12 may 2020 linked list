@@ -1,0 +1,62 @@
+#include <iostream>
+using namespace std;
+struct node
+{
+    int data;
+    node* next;
+};
+node *addnode(node *head,int val)
+{
+    node *newnode=new node;
+    newnode->data=val;
+    if(head==NULL)
+    {
+         newnode->next=NULL;
+        return newnode;
+    }
+    newnode->next=head;
+    return newnode;
+}
+void print(node* head){
+    node *curr=head;
+    while(curr!=NULL)
+    {
+        cout<<curr->data<<" ";
+        curr=curr->next;
+    }
+}
+node* addnodeatlast(node* head,int val)
+{
+    node *newnode=new node;
+    newnode->data=val;
+    newnode->next=NULL;
+    if(head==NULL)
+    {
+        return newnode;
+    }
+    node* curr=head;
+    while(curr->next!=NULL)
+    {
+        curr=curr->next;
+    }
+    curr->next=newnode;
+    return head;
+}
+
+int main() {
+    node* head=NULL;
+    head=addnode(head,10);
+    head=addnode(head,20);
+    head=addnode(head,30);
+    head=addnode(head,40); 
+    head=addnodeatlast(head,50);
+    head=addnodeatlast(head,60);
+    head=addnodeatlast(head,70);
+
+    print(head);
+
+    // cout<<head->data<<" "; 
+    // cout<<head->next->data<<" ";
+  
+    
+}

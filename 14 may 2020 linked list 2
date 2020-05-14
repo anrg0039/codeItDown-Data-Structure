@@ -1,0 +1,92 @@
+#include <iostream>
+using namespace std;
+struct node{
+    int data;
+    node* next;
+};
+node* adddnodeafter(node* head,int pos,int val)
+{
+    node* newnode=new node;
+    newnode->data=val;
+    if(head==NULL)
+    {
+        newnode->next=NULL;
+        return newnode;
+    }
+    node* curr=head;
+    while(curr->next!=NULL&&curr->data!=pos)
+    {
+        curr=curr->next;
+    }
+    if(curr->next==NULL)
+    {
+        curr->next=newnode;
+        newnode->next=NULL;
+        return head;
+    }
+    node* temp=curr->next;
+    curr->next=newnode;
+    newnode->next=temp;
+    return head;
+}
+void print(node* head)
+{
+    node* curr=head;
+    while(curr!=NULL)
+    {
+        cout<<curr->data<<" ";
+        curr=curr->next;
+    }
+}
+node* deletefromfront(node* head)
+{
+    if(head==NULL)
+    {
+        cout<<"There is nothing to delete\n";
+        return head;
+    }
+    node* temp=head;
+    head=head->next;
+    delete temp;
+    return head;
+
+}
+node* deletefromend(node* head)
+{
+    if(head==NULL)
+    {
+        cout<<"There is nothing to delete\n";
+        return head;
+    }
+    node* curr=head;
+    if(head->next==NULL)
+    {
+        delete head;
+        return NULL;
+    }
+    while(curr->next->next!=NULL)
+    {
+        curr=curr->next;
+    }
+    node* temp=curr->next;
+    curr->next=NULL;
+    delete temp;
+    return head;
+}
+int main() {
+    node* head=NULL;
+   
+    head=adddnodeafter(head,25,10);
+   // head=deletefromend(head);
+    head=adddnodeafter(head,10,26);
+    head=adddnodeafter(head,10,500);
+    head=adddnodeafter(head,500,100);
+    head=adddnodeafter(head,1000,89);
+    head=deletefromend(head);
+    head=deletefromend(head);
+    head=deletefromend(head);
+
+    print(head);
+
+
+}

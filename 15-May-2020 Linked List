@@ -1,0 +1,101 @@
+#include <iostream>
+using namespace std;
+struct node{
+    int data;
+    node* next;
+};
+node* addnode(node* head,int val)
+{
+    node* newnode=new node;
+    newnode->data=val;
+    newnode->next=head;
+    return newnode;
+}
+void print(node* head)
+{
+    node* curr=head;
+    while(curr!=NULL)
+    {
+        cout<<curr->data<<" ";
+        curr=curr->next;
+    }
+}
+node* deletegivenvalue(node* head,int val)
+{
+    if(head==NULL)
+    {
+        cout<<"There is nothing to delete\n";
+        return head;
+    }
+    if(head->data==val)
+    {
+        node* temp=head;
+        head=head->next;
+        delete temp;
+        return head;
+
+    }
+    node* curr=head;
+    while(curr->next!=NULL&&curr->next->data!=val)
+    {
+        curr=curr->next;
+    }
+    if(curr->next!=NULL&&curr->next->data==val)
+    {
+        node* temp=curr->next;
+        curr->next=temp->next;
+        delete temp;
+        return head;
+    }
+    cout<<"we have not found the given value in our linked list\n";
+    return head;
+
+}
+node* reverselinked(node* head)
+{
+    if(head==NULL)
+    {
+        return head;
+    }
+    node* revhead=NULL;
+    node* curr=head;
+    while(curr!=NULL)
+    {
+        revhead=addnode(revhead,curr->data);
+        curr=curr->next;
+    }
+    return revhead;
+
+}
+node* reverselist(node* head)
+{
+    if(head==NULL || head->next == NULL )
+    {
+        return head;
+    }
+    node* revhead=NULL;
+    while(head!=NULL)
+    {
+        node *temp = head;
+        head=head->next;
+        temp->next=revhead;
+        revhead=temp;
+    }
+    return revhead;
+}
+int main() {
+    node* head=NULL;
+    head=addnode(head,10);
+    head=addnode(head,20);
+    head=addnode(head,30);
+    head=addnode(head,40);
+    head=addnode(head,50);
+  //  head=deletegivenvalue(head,40);
+    node *revhead=reverselinked(head);
+    print(head);
+    cout<<"\nReverse:\n";
+    print(revhead);
+    head=reverselist(head);
+
+    
+}

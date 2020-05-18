@@ -1,0 +1,113 @@
+#include <iostream>
+using namespace std;
+struct node{
+    int data;
+    node* next;
+    node* prev;
+};
+node* phead=NULL;
+node* addatfront(node* head, int val)
+{
+    node* newnode  = new node;
+    newnode->data=val;
+    newnode->prev=NULL;
+    if(head==NULL)
+    {
+        newnode->next=NULL;
+        phead=newnode;
+        return newnode;
+    }
+    newnode->next=head;
+    head->prev=newnode;
+    return newnode;
+}
+node* addatlast(node* head,int val)
+{
+    node* newnode= new node;
+    newnode->data=val;
+    newnode->next=NULL;
+    if(head==NULL)
+    {
+        newnode->prev=NULL;
+        phead=newnode;
+        return newnode;
+    }
+    // node* curr = head;
+    // while(curr->next)
+    // {
+    //  curr=curr->next;
+    // }
+    phead->next=newnode;
+    newnode->prev=phead;
+    phead=newnode;
+    return head;
+
+}
+void print(node* head)
+{
+    node* curr=head;
+    node* lastnode;
+    while(curr)
+    {
+        cout<<curr->data<<" ";
+        lastnode=curr;
+        curr=curr->next;
+    }
+
+    cout<<"\nReverse:\n";
+    while(lastnode)
+    {
+        cout<<lastnode->data<<" ";
+        lastnode=lastnode->prev;
+    }
+}
+node* addatpos(node* head, int pos, int val)
+{
+    if(pos<0)
+    {
+        cout<<"Please specify the correct index\n";
+        return head;
+    }
+    if(pos==0)
+    {
+        return addatfront(head,val);
+    }
+    node* newnode= new node;
+    newnode->data=val;
+    node* curr=head;
+    int count=0;
+    while(curr && (count!=pos-1))
+    {
+        count++;
+        curr=curr->next;
+    }
+    if(curr==NULL)
+    {
+        cout<<"Please specify a correct Index\n";
+        return head;
+    }
+    // node* temp = curr->next;
+    // curr->next=newnode;
+    // newnode->prev=curr;
+    // newnode->next=temp;
+    // temp->prev=newnode;
+    newnode->next=curr->next;
+    curr->next=newnode;
+    newnode->next->prev=newnode;
+    newnode->prev=curr;
+    return head;
+}
+
+int main() {
+    node* head = NULL;
+    head=addatfront(head,10);
+    head=addatfront(head,20);
+    head=addatfront(head,30);
+    head=addatfront(head,40);
+    head=addatfront(head,50);
+    head=addatlast(head,80);
+    head=addatlast(head,100);
+    head=addatpos(head,0,90);
+    print(head);
+
+}

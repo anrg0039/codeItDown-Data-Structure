@@ -1,0 +1,129 @@
+#include <iostream>
+using namespace std;
+class DoublyLinkedList{
+    public:
+    int data;
+    DoublyLinkedList* next;
+    DoublyLinkedList* prev;
+    DoublyLinkedList(int val)
+    {
+        this->data=val;
+        this->next = NULL;
+        this->prev = NULL;
+    }
+};
+DoublyLinkedList *lastnode = NULL;
+DoublyLinkedList* addatfront(DoublyLinkedList* head, int val)
+{
+    DoublyLinkedList* newnode = new DoublyLinkedList(val);
+    if(head == NULL)
+    {
+        lastnode = newnode;
+        return newnode;
+    }
+    newnode->next = head;
+    head->prev = newnode;
+    return newnode;
+
+}
+void print(DoublyLinkedList* head)
+{
+    DoublyLinkedList* curr = head;
+    while(curr)
+    {
+        cout<<curr->data<<" ";
+        curr= curr->next;
+    }
+}
+DoublyLinkedList* removefront(DoublyLinkedList* head)
+{
+    if(head == NULL)
+    {
+        cout<<"Linked List is empty\n";
+        return head;
+    }
+    if(head->next == NULL)
+    {
+        lastnode = NULL;
+        delete head;
+        return NULL;
+    }
+    head = head->next;
+    delete head->prev;
+    head->prev = NULL;
+    return head;
+
+}
+DoublyLinkedList* removefromlast(DoublyLinkedList* head)
+{
+    if(head == NULL)
+    {
+        cout<<"Linked List is empty\n";
+        return head;
+    }
+    if(head->next == NULL)
+    {
+        lastnode = NULL;
+        delete head;
+        return NULL;
+    }
+
+    lastnode = lastnode->prev;
+    delete lastnode->next;
+    lastnode->next= NULL;
+     return head;
+}
+DoublyLinkedList* removegivenval(DoublyLinkedList* head, int val)
+{
+    if(head == NULL)
+    {
+        cout<<"Linked list is empty\n";
+        return head;
+    }
+    DoublyLinkedList* curr = head;
+    while(curr && curr->data != val)
+    {
+       curr = curr->next;
+    }
+    if(curr == NULL)
+    {
+        cout<<"Data not found\n";
+        return head;
+    }
+    if(head == curr)
+    {
+        head = head->next;
+    }
+    if(lastnode == head)
+    {
+        lastnode = lastnode->prev;
+    }
+    if(curr->prev)
+    curr->prev->next = curr->next;
+    if(curr->next)
+    curr->next->prev = curr->prev;
+    delete curr;
+    return head;
+
+
+}
+
+int main() {
+    DoublyLinkedList* head = NULL;
+   // head = removefromlast(head);
+    head = addatfront(head,10);
+    head = addatfront(head,20);
+    head = addatfront(head,30);
+    head = addatfront(head,40);
+    head = addatfront(head,50);
+    head = addatfront(head,60);
+ // head = removefront(head);
+    //head = removefromlast(head);
+  //  head = removegivenval(head,20);
+    head = removegivenval(head,60);
+     
+    
+
+    print(head);
+
+}

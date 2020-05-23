@@ -1,0 +1,165 @@
+//Using Singly Linked List
+#include <iostream>
+using namespace std;
+class CircularList{
+    public:
+    int data;
+    CircularList* next;
+    CircularList(int val)
+    {
+        this->data=val;
+        this->next=NULL;
+    }
+};
+int count=0;
+CircularList* last = NULL;
+CircularList* addnodefront(CircularList* head, int val)
+{
+    CircularList* newnode = new CircularList(val);
+    if(head == NULL)
+    {
+        newnode->next = newnode;
+        last = newnode;
+        count++;
+        return newnode;
+    }
+    newnode->next = head;
+    last->next = newnode;
+    count++;
+    return newnode;
+}
+CircularList* addatlast(CircularList* head, int val)
+{
+     CircularList* newnode = new CircularList(val);
+    if(head == NULL)
+    {
+        newnode->next = newnode;
+        last = newnode;
+        count++;
+        return newnode;
+    }
+    last->next =newnode;
+    newnode->next = head;
+    last =newnode;
+    count++;
+    return head;
+}
+void print(CircularList* head)
+{
+    CircularList* temp = head;
+    if(head !=NULL)
+    {
+    do{
+        cout<<head->data<<" ";
+        head=  head->next;
+    }while(head!=temp);
+    }
+}
+void middleadd(CircularList* head,int val)
+{
+    CircularList* newnode = new CircularList(val);
+    int middle = count/2;
+    int c=0;
+    while(c!=middle-1)
+    {
+        c++;
+        head = head ->next;
+    }
+    CircularList* temp = head->next;
+    head->next = newnode;
+    newnode->next = temp;
+}
+int main() {
+   CircularList* head = NULL;
+   head = addnodefront(head,10);
+   head = addnodefront(head,20);
+   head = addnodefront(head,30);
+   head = addnodefront(head,40);
+   head = addnodefront(head,50);
+   head = addnodefront(head,100);
+   head = addatlast(head,25);
+// head = addatlast(head,525);
+  cout<<count<<"->total count\n";
+  middleadd(head,250);
+  middleadd(head,10000);
+
+        print(head);
+        cout<<"\n"<<head->data<<" head\n";
+        print(head);
+
+}
+
+
+
+
+//Using Doubly Linked List
+#include <iostream>
+using namespace std;
+class DCircularList{
+    public:
+    int data;
+    DCircularList* next;
+    DCircularList* prev;
+    DCircularList(int val)
+    {
+        this->data = val;
+        this->next = NULL;
+        this->prev = NULL;
+    }
+};
+DCircularList* addatfront(DCircularList* head,int data)
+{
+    DCircularList* newnode = new DCircularList(data);
+    if(head == NULL)
+    {
+        newnode->next = newnode;
+        newnode->prev = newnode;
+        return newnode;
+    }
+    newnode->next = head;
+    head->prev->next = newnode;
+    newnode->prev = head ->prev;
+    head->prev = newnode;
+    return newnode;
+
+}
+DCircularList* addatlast(DCircularList* head, int data)
+{
+    DCircularList* newnode = new DCircularList(data);
+    if(head == NULL)
+    {
+        newnode->next = newnode;
+        newnode->prev = newnode;
+        return newnode;
+    }
+    newnode->next = head;
+    head->prev->next = newnode;
+    newnode->prev = head ->prev;
+    head->prev = newnode;
+    return head;
+
+}
+void print(DCircularList* head)
+{
+    DCircularList* temp = head;
+    if(head !=NULL)
+    {
+    do{
+        cout<<head->data<<" ";
+        head=  head->next;
+    }while(head!=temp);
+    }
+}
+int main() {
+    DCircularList* head = NULL;
+    head = addatfront(head,10);
+    head = addatfront(head,20);
+    head = addatfront(head,30);
+    head = addatfront(head,40);
+    head = addatfront(head,50);
+    head = addatlast(head,1000);
+     head = addatlast(head,2000);
+    print(head);
+}
+
+

@@ -1,0 +1,135 @@
+//Basicsof stacks
+#include <iostream>
+#include <stack>
+using namespace std;
+void print(stack<char> s)
+{
+    while(!s.empty())
+    {
+        cout<<s.top()<<" ";
+        s.pop();
+    }
+}
+string reverse(string s)
+{
+    stack<char> st;
+    for(int i=0;i<s.size();i++)
+    {
+        st.push(s[i]);
+    }
+
+    for(int i=0;i<s.size();i++)
+    {
+        s[i]=st.top();
+        st.pop();
+    }
+    return s;
+}
+int main() {
+    stack<stack<int>> x;
+
+    stack<int> d;
+    d.push(10);
+    d.push(20);
+    d.push(30);
+
+    x.push(d);
+
+    stack<int> c;
+    c.push(30);
+    c.push(40);
+
+    x.push(c);
+
+   // x.push(c.push(50));
+
+    while(!x.empty())
+    {
+        cout<<"\n";
+    stack<int> z = x.top();
+    while(!z.empty()) 
+    {
+        cout<<z.top()<<" ";
+        z.pop();
+    }
+    x.pop();
+    }
+
+
+
+}
+
+
+//minimum value of the stack
+#include <iostream>
+#include<stack>
+using namespace std;
+void add(stack<int> &m, stack<int> &a,int data)
+{
+    if(m.empty())
+    {
+        m.push(data);
+        a.push(data);
+        return;
+    }
+    int z = a.top();
+    if(z>data)
+    {
+        m.push(data);
+        a.push(data); 
+    }
+    else
+    {
+        m.push(data);
+        a.push(z);
+    }
+
+}
+void print(stack<int> m, stack<int> a)
+{
+    cout<<"Main Stack: ";
+    while(!m.empty())
+    {
+        cout<<m.top()<<" " ;
+        m.pop();
+    }
+    cout<<"\nAux stack: ";
+     while(!a.empty())
+    {
+        cout<<a.top()<<" ";
+        a.pop();
+    }
+
+}
+void remove(stack<int> &m, stack<int> &a)
+{
+    if(m.empty())
+    {
+        cout<<"Stack is empty\n";
+        return ;
+    }
+    
+    m.pop();
+    a.pop();
+}
+int getmin(stack<int> a)
+    {
+        if(a.empty())
+        return -1;
+
+        return a.top();
+    }
+int main() {
+    stack<int> m;
+    stack<int> a;
+    add(m,a,10);
+    add(m,a,20);
+    add(m,a,5);
+   
+    add(m,a,1);
+     remove(m,a);
+
+    int  z= getmin(a);
+    cout<<z<<" ";
+
+}

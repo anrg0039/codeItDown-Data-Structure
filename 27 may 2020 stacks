@@ -1,0 +1,153 @@
+//Stacks using array
+#include <iostream>
+using namespace std;
+template<typename T>
+class stack{
+    T *arr;
+    int capacity;
+    int top;
+    public:
+    stack(int size)
+    {
+        arr = new T[size];
+        capacity = size;
+        top = 0;
+    }
+    void push(T val)
+    {
+        if(isfull())
+        {
+            cout<<"Stack overflow\n";
+            return;
+        }
+        cout<<"Pushing "<<val<<" to our stack\n";
+        arr[top++]=val;
+    }
+     bool isfull()
+     {
+         if(top == capacity - 1)
+         {
+             return true;
+         }
+         else
+         return false;
+     }
+     void pop()
+     {
+         if(isempty())
+         {
+             cout<<"Stack Underflow\n";
+             return;
+         }
+         cout<<"Poping "<<arr[top-1]<<"from our stack\n";
+         top--;
+     }
+
+    T topelement()
+    {
+        T a;
+        if(isempty())
+        {
+            cout<<"Stack Underflow\n";
+            return a;
+        }
+        return arr[top-1];
+    }
+
+     bool isempty()
+     {
+         if(top == 0)
+         return true;
+         else
+         return false;
+     }
+};
+int main() {
+    stack<string> st(5);
+ 
+    st.push("hello");
+    st.push("hi");
+    st.push("xdf");
+    st.pop();
+    cout<<"Top Element: "<<st.topelement()<<endl;
+    
+     stack<int> st1(5);
+     st1.push(10);
+     st1.push(20);
+     st1.push(30);
+      cout<<"Top Element: "<<st1.topelement()<<endl;
+     
+    // st.pop();
+    // cout<<"is our stack empty "<<st.isempty()<<"\n";
+    // cout<<"top element "<<st.topelement()<<"\n";
+}
+
+//minimum element in the stack at O(1) space and time complexity.
+
+#include <iostream>
+#include<stack>
+using namespace std;
+void add(stack<int> &st, int &min, int val)
+{
+    if(st.empty())
+    {
+        st.push(val);
+        min = val;
+        return;
+    }
+    if(val>=min)
+    {
+        st.push(val);
+        return;
+    }
+    st.push(2*val-min);
+    min = val;
+    return;
+}
+int top1(stack<int> st, int min)
+{
+    if(st.empty())
+    {
+        cout<<"Stack underflow";
+        return -1;
+    }
+    int a = st.top();
+
+    if(a>=min)
+    {
+        return a;
+    }
+    return min;
+}
+
+void remove(stack<int> &st, int &min)
+{
+    if(st.empty())
+    {
+        cout<<"Stack underflow\n";
+        return;
+    }
+    int a = st.top();
+    if(a>=min)
+    {
+        st.pop();
+        return;
+    }
+    st.pop();
+    min = 2*min - a;  
+}
+
+int main() {
+    stack<int> st;
+    int min;
+    add(st, min,10);
+    add(st, min,20);
+    add(st, min,30);
+    add(st,min,5);
+    add(st,min,1);
+    remove(st,min);
+    cout<<"Minimum value: "<<min<<endl;
+    cout<<top1(st,min)<<" ";
+    
+
+}

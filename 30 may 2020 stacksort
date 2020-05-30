@@ -1,0 +1,52 @@
+#include <iostream>
+#include<stack>
+using namespace std;
+stack<int> sortstack(stack<int> st)
+{
+    if(st.empty())
+    {
+        cout<<"Stack is empty\n";
+        return st;
+    }
+    stack<int> temp;
+    int a = st.top();
+    st.pop();
+    temp.push(a);
+    
+    while(!st.empty())
+    {
+        int t = st.top();
+        st.pop();
+        while( !temp.empty() && t > temp.top() )
+        {
+            int v = temp.top();
+            st.push(v);
+            temp.pop();
+        }
+        temp.push(t);
+
+    }
+    return temp;
+
+}
+void print(stack<int> st)
+{
+    while(!st.empty())
+    {
+        cout<<st.top()<<" ";
+        st.pop();
+    }
+}
+int main() {
+    stack<int> st;
+    int n;
+    cin>>n;
+    while(n--)
+    {
+        int z;
+        cin>>z;
+        st.push(z);
+    }
+    st = sortstack(st);
+    print(st);
+}

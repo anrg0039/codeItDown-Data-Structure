@@ -1,0 +1,192 @@
+//Part - 1
+#include <iostream>
+using namespace std;
+class Queue{
+    int front,rear,capacity;
+    int *arr;
+    public:
+    Queue(int size)
+    {
+        arr = new int[size];
+        front =0;
+        rear = 0;
+        capacity = size;
+    }
+    bool isfull()
+    {
+        if(rear == capacity)
+        {
+            return true;
+        }
+        else
+        return false;
+    }
+
+    void enQueue(int val)
+    {
+        if(isfull())
+        {
+            cout<<"Queue is already full you can not add any value\n";
+            return;
+        }
+
+        cout<<"Inserting: "<<val<<"\n";
+        arr[rear++]=val;   
+    }
+    bool isEmpty()
+    {
+        if(rear == 0)
+        {
+            return true;
+        }
+        else
+        return false;
+    }
+
+    void deQueue()
+    {
+        if(isEmpty())
+        {
+            cout<<"Queue is empty, You can delete anything\n";
+            return;
+        }
+        cout<<"Deleting: "<<arr[0]<<"\n";
+        for(int i = 0 ;i<rear - 1; i++)
+        {
+            arr[i]=arr[i+1];
+        }
+        rear--;
+
+    }
+
+    void print()
+    {
+        cout<<"Printing the elements of the queue: ";
+        for(int i= 0 ; i< rear ;i++)
+        {
+            cout<<arr[i]<<" ";
+        }
+        cout<<"\n";
+    }
+
+
+
+};
+int main() {
+    Queue q(5);
+     q.deQueue();
+    q.enQueue(10);
+    q.enQueue(20);
+    q.enQueue(30);
+    q.enQueue(40);
+    q.enQueue(50);
+    q.deQueue();
+    q.enQueue(60);
+    q.print();
+
+}
+
+
+
+
+//Part - 2
+
+#include <iostream>
+using namespace std;
+class Queue{
+    int front, rear, capacity;
+    int *arr;
+    public:
+    Queue(int size)
+    {
+        rear = -1;
+        front = -1;
+        arr = new int[size];
+        capacity = size;
+    }
+    bool isFull()
+    {
+        if((front == 0 && rear == capacity -1 ) || (rear == front -1 ))
+        return true;
+        else
+        return false;
+    }
+    void enQueue(int val)
+    {
+        if(isFull())
+        {
+            cout<<"Queue is full\n";
+            return;
+        }
+        if(rear == -1)
+        {
+            cout<<"Inserting: "<<val<<"\n";
+            front = 0;
+            rear = 0;
+            arr[rear]=val;
+            return;
+        }
+        cout<<"Inserting: "<<val<<"\n";
+        rear = (rear+1)%capacity;
+        arr[rear] = val;
+    }
+
+    bool isempty()
+    {
+        if(rear == -1)
+        {
+            return true;
+        }
+        else
+        return false;
+    }
+    void deQueue()
+    {
+        if(isempty())
+        {
+            cout<<"Queue is empty\n";
+            return;
+        }
+        if(front == rear)
+        {
+            cout<<"Delting: "<<arr[front]<<" ";
+            front = -1;
+            rear = -1;
+            return;
+        }
+        cout<<"Deleting: "<<arr[front]<<"\n";
+        front = (front+1)%capacity;
+    }
+    void print()
+    {
+        cout<<"Printing elements of the queue: ";
+        if(front<rear)
+        {
+            for(int i=front;i<=rear;i++)
+            {
+                cout<<arr[i]<<" ";
+            }
+        }
+        else{
+            for(int i=front ;i<capacity;i++)
+            {
+                cout<<arr[i]<<" ";
+            }
+            for(int i=0;i<=rear;i++)
+            {
+                cout<<arr[i]<<" ";
+            }
+        }
+    }
+};
+int main() {
+    Queue q(5);
+    q.enQueue(10);
+    q.enQueue(20);
+    q.enQueue(30);
+    q.enQueue(40);
+    q.enQueue(50);
+    q.deQueue();
+    q.enQueue(60);
+    q.print();
+}

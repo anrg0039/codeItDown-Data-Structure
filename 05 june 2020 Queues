@@ -1,0 +1,196 @@
+// Part - 1
+#include <iostream>
+using namespace std;
+
+template <typename P>
+class LinkedList{
+    public:
+    P data;
+    LinkedList *next;
+    LinkedList(P val)
+    {
+        data = val;
+        next= NULL;
+    }
+};
+
+template<typename T>
+class Queue{
+    LinkedList<T>* rear;
+    LinkedList<T>* front;
+    public:
+    Queue()
+    {
+        front = NULL;
+        rear = NULL;
+    }
+    void enQueue(T data){
+        LinkedList<T>* newnode = new LinkedList<T>(data);
+        cout<<"Inserting: "<<data<<"\n";
+        if(rear == NULL)
+        {
+            rear  = newnode;
+            front = newnode;
+            return;
+        }
+
+        
+        rear->next = newnode;
+        rear = newnode;
+    }
+
+    void deQueue()
+    {
+        if(front == NULL)
+        {
+            cout<<"Queue is empty\n";
+            return;
+        }
+        cout<<"Deleting: "<<front->data<<"\n";
+        LinkedList<T>* temp = front;
+        front = front->next;
+        delete temp;
+    }
+    void print()
+    {
+        if(rear == NULL)
+        {
+            cout<<"Queue is empty\n";
+            return;
+        }
+        cout<<"Printing the data of queue: ";
+        LinkedList<T>* temp = front;
+
+        while(temp!=NULL)
+        {
+            cout<<temp->data<<" ";
+            temp = temp->next;
+        }
+
+        cout<<"\n";
+
+    }
+    void frontdata()
+    {
+        if(front == NULL)
+        {
+            cout<<"Queue is empty\n";
+            return;
+        }
+        cout<<"Front data of the queue is: "<<front->data<<"\n";
+    }
+};
+
+int main() {
+    Queue<string> q;
+
+    q.enQueue("hello");
+    q.enQueue("hi");
+    q.enQueue("codeItDown");
+    q.enQueue("Thank you");
+    q.frontdata();
+    q.deQueue();
+     q.frontdata();
+    q.print();
+}
+
+
+//Part - 2
+
+#include <iostream>
+#include<queue>
+#include<stack>
+ using namespace std;
+// void print(queue<int> r)
+// {
+//     cout<<"Printing the data of the queue: ";
+//     while(!r.empty())
+//     {
+//         cout<<r.front()<<" ";
+//         r.pop();
+//     }
+    
+// }
+// int main() {
+//     queue<int> r;
+
+//     r.push(10);
+//     r.push(20);
+//     r.push(30);
+//     r.push(40);
+
+//   //  r.pop();
+
+//     cout<<"Front data of the queue is: "<<r.front()<<"\n";
+//     cout<<"Last data of the queue is: "<<r.back()<<endl;
+//     cout<<"Size "<<r.size()<<endl;
+
+//     print(r);
+//     cout<<endl<<"front data: "<<r.front();
+    
+
+// }
+
+
+class Queue{
+    stack<int> s1;
+    stack<int> s2;
+    public:
+    void enQueue(int data)
+    {
+        cout<<"Inserting: "<<data<<"\n";
+        while(!s1.empty())
+        {
+            int a = s1.top();
+            s2.push(a);
+            s1.pop();
+        }
+        s1.push(data);
+        while(!s2.empty())
+        {
+            int a = s2.top();
+            s1.push(a);
+            s2.pop();
+        }
+
+    }
+    void deQueue()
+    {
+        if(s1.empty())
+        {
+            cout<<"Queue is empty\n";
+            return;
+        }
+        cout<<"Deleting: "<<s1.top()<<"\n";
+        s1.pop();
+    }
+    void print()
+    {
+        stack<int> temp = s1;
+        cout<<"Printing the data of the Queue: ";
+        while(!temp.empty())
+        {
+            cout<<temp.top()<<" ";
+            temp.pop();
+        }
+        cout<<"\n";
+    }
+};
+
+
+int main()
+{
+    Queue q;
+     q.deQueue();
+    q.enQueue(10);
+    q.enQueue(20);
+    q.enQueue(30);
+    q.enQueue(40);
+   
+    q.print();
+
+}
+
+
+
+

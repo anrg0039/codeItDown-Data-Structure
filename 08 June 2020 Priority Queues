@@ -1,0 +1,231 @@
+//Part - 1
+#include <bits/stdc++.h>
+using namespace std;
+struct prior_Queue{
+    int data;
+    int pri;
+};
+class Priority_Queue{
+    prior_Queue *A;
+    int capacity;
+    int last;
+    public:
+
+    Priority_Queue(int size)
+    {
+        A = new prior_Queue[size];
+        capacity = size;
+        last = 0;
+    }
+     bool isFull()
+     {
+         if(last == capacity)
+         {
+             return true;
+         }
+         else
+         return false;
+
+     }
+    void enQueue(int data, int pri)
+    {
+        if(isFull())
+        {
+            cout<<"Priority Queue is already full\n";
+            return;
+        }
+        cout<<"Inserting: "<<data<<" With the priority: "<<pri<<"\n";
+        A[last].data = data;
+        A[last].pri = pri;
+        last++;
+    }
+    bool isEmpty()
+    {
+        if(last == 0)
+        {
+            return true;
+        }
+        else
+        return false;
+    }
+
+    void deQueue()
+    {
+        if(isEmpty())
+        {
+            cout<<"Priority Queue is empty\n";
+            return;
+        }
+        int maxp = INT_MIN;
+        int k;
+        for(int i=0;i<last;i++)
+        {
+            if(maxp<A[i].pri)
+            {
+                maxp = A[i].pri;
+                k = i;
+            }
+        }
+        cout<<"Deleting: "<<A[k].data<<" with the highest priority: "<<maxp<<endl;
+        for(int i = k; i<last-1;i++)
+        {
+            A[i] = A[i+1];
+        }
+        last--;
+
+    }
+
+    void print()
+    {
+        cout<<"Printing the values of the Priority Queues: \n";
+        for(int i=0;i<last;i++)
+        {
+            cout<<"Data: "<<A[i].data<<" Priority: "<<A[i].pri<<endl; 
+        }
+    }
+
+};
+int main() {
+    Priority_Queue q(5);
+    q.enQueue(10,4);
+     q.enQueue(20,3);
+      q.enQueue(30,2);
+       q.enQueue(40,1);
+        q.enQueue(50,5);
+        q.deQueue();
+        q.deQueue();
+        q.deQueue();
+        q.deQueue();
+        q.deQueue();
+        q.deQueue();
+
+        q.print();
+    
+}
+
+
+//Part - 2
+
+#include <iostream>
+using namespace std;
+class LinkedList{
+    public:
+    int data;
+    int pri;
+    LinkedList* next;
+    LinkedList(int data, int pri)
+    {
+        this->data = data;
+        this->pri = pri;
+        this->next = NULL;
+    }
+};
+
+class Priority_Queue{
+    LinkedList *head;
+    LinkedList *tail;
+    public:
+    Priority_Queue()
+    {
+        head = NULL;
+        tail = NULL;
+    }
+
+    void enQueue(int data, int pri)
+    {
+        LinkedList *newnode = new LinkedList(data, pri);
+
+        cout<<"Inserting: "<<data<<" With the priority: "<<pri<<endl;
+        if(head == NULL)
+        {
+            head = newnode;
+            tail = newnode;
+            return;
+        }
+        tail->next = newnode;
+        tail = newnode;
+    }
+
+    void deQueue()
+    {
+        if(head == NULL )
+        {
+            cout<<"Priority Queue is empty\n";
+            return;
+        }
+        LinkedList* temp = head;
+        LinkedList* maxp = head;
+
+        while(temp != NULL )
+        {
+            if(maxp->pri<temp->pri)
+            {
+                maxp = temp;
+            }
+            temp = temp->next;
+        }
+
+
+        cout<<"Deleting: "<<maxp->data<<" with the highest priority "<<maxp->pri<<endl;
+
+        if(head->next == NULL)
+        {
+            delete head;
+            head = NULL;
+            tail = NULL;
+            return;
+        }
+        
+
+        if(maxp == head)
+        {
+            head = head->next;
+            delete maxp;
+            return;
+            }
+
+            temp = head;
+
+        while(temp->next != maxp)
+        {
+            temp = temp->next;
+        }
+        if(maxp == tail)
+        tail = temp;
+        temp->next = maxp->next;
+        delete maxp;
+    }
+
+    void print()
+    {
+
+        if(head  == NULL)
+        {
+            cout<<"Priority Queue is empty\n";
+            return;
+        }
+        LinkedList* temp = head;
+        cout<<"Printing the values of the Priority Queue: \n";
+
+        while(temp != NULL)
+        {
+            cout<<"Data: "<<temp->data<<" Priority: "<<temp->pri<<endl;
+            temp  = temp->next;
+        }
+    }
+
+};
+
+int main() {
+    Priority_Queue q;
+    q.enQueue(10,5);
+    q.enQueue(20,8);
+    q.enQueue(30,7);
+    q.enQueue(40,9);
+    q.enQueue(50,14);
+    q.deQueue();
+
+    q.enQueue(45,3);
+    
+    q.print();
+}

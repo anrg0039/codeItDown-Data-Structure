@@ -1,0 +1,123 @@
+#include <iostream>
+using namespace std;
+class Heap{
+    int *arr;
+    int capacity;
+    int last;
+    public:
+    Heap(int size)
+    {
+        arr = new int[size];
+        capacity = size;
+        last = -1;
+    }
+    bool isFull()
+    {
+        if(last+1 == capacity)
+        {
+            return true;
+        }
+        else
+        return false;
+    }
+    bool isEmpty()
+    {
+        if(last == -1)
+        {
+            return true;
+        }
+        else
+        return false;
+    }
+    void downHeapify(int k)
+    {
+        int largest = k;
+
+        int left = (k*2)+1;
+        int right = (k*2)+2;
+
+        if( left<=last && arr[left]> arr[largest])
+        {
+            largest = left;
+        }
+
+        if(right<= last && arr[right]> arr[largest])
+        {
+            largest = right;
+
+        }
+
+        if(largest != k )
+        {
+            swap(arr[k],arr[largest]);
+
+        downHeapify(largest);
+        }}
+    void remove()
+    {
+        if(isEmpty())
+        {
+            cout<<"Heap is empty\n";
+            return;
+        }
+
+        cout<<"Deleting: "<<arr[0]<<endl;
+
+        swap(arr[0],arr[last]);
+        last--;
+        downHeapify(0);
+
+
+    }
+
+    void upHeapify(int ind)
+    {
+       int parent = (ind-1)/2;
+
+       if( parent >= 0 && arr[parent] < arr[ind])
+       {
+           swap(arr[parent],arr[ind]);
+           upHeapify(parent);
+       }
+    }
+    void add(int data)
+    {
+        if(isFull())
+        {
+
+            cout<<"Heap is full\n";
+            return;
+        }
+        cout<<"Inserting: "<<data<<endl;
+
+        arr[++last] = data;
+        upHeapify(last);
+
+    }
+
+    void print()
+    {
+        cout<<"Printing the data of headp: ";
+        for(int i=0;i<=last;i++)
+        {
+            cout<<arr[i]<<" ";
+        }
+
+    }
+};
+int main() {
+    Heap h(8);
+    h.add(10);
+    h.add(48);
+    h.add(12);
+    h.add(16);
+    h.add(57);
+    h.add(85);
+    h.add(96);
+    h.add(5);
+    h.add(26);
+    h.add(9);
+    // h.remove();
+    h.print();
+
+}

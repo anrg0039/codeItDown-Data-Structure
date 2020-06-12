@@ -1,0 +1,207 @@
+#include <bits/stdc++.h>
+using namespace std;
+class HeapNode{
+    public:
+    int data;
+    HeapNode* left;
+    HeapNode* right;
+    HeapNode* parent;
+    HeapNode(int val)
+    {
+        data = val;
+        left = NULL;
+        right = NULL;
+        parent = NULL;
+    }
+};
+
+
+
+class Heap{
+    HeapNode* root;
+    public:
+    Heap()
+    {
+        root = NULL;
+    }
+    HeapNode* lastparent()
+{
+    queue<HeapNode*> q;
+    q.push(root);
+    HeapNode* temp;
+
+    while(!q.empty())
+    {
+        temp = q.front();
+        q.pop();
+        if(temp->left && temp->right)
+        {
+            q.push(temp->left);
+            q.push(temp->right);
+        }
+        else
+        {
+            break;
+        }
+    }
+    return temp;
+}
+    void upHeapify(HeapNode* temp)
+    {
+        if(temp->parent == NULL)
+        {
+            return;
+        }
+        if(temp->parent->data < temp->data)
+        {
+            swap(temp->parent->data,temp->data);
+            upHeapify(temp->parent);
+        }
+    }
+    void add(int data)
+    {
+        HeapNode* newnode = new HeapNode(data);
+        cout<<"Inserting: "<<data<<"\n";
+
+        if(root == NULL)
+        {
+            root = newnode;
+            return;
+        }
+
+        HeapNode* lpar = lastparent();
+
+        if(lpar->left == NULL)
+        {
+            lpar->left = newnode;
+            newnode->parent = lpar;
+        }
+        else
+        {
+            lpar->right = newnode;
+            newnode->parent = lpar;
+        }
+        upHeapify(newnode);
+
+    }
+
+    void inorder(HeapNode* he)
+    {
+        if(he == NULL)
+        {
+            return;
+        }
+        inorder(he->left);
+        cout<<he->data<<" ";
+        inorder(he->right);
+    }
+
+    void print()
+    {
+        cout<<"Printing the data of the Heap: ";
+        HeapNode* temp = root;
+        inorder(temp);
+        cout<<endl; 
+    }
+    bool isEmpty()
+    {
+        if(root == NULL)
+        {
+            return true;
+        }
+        else
+        return false;
+    }
+    HeapNode* lastnode()
+    {
+        queue<HeapNode*> q;
+        q.push(root);
+        HeapNode* last;
+        while(!q.empty())
+        {
+            last = q.front();
+            q.pop();
+            if(last->left)
+            {
+                q.push(last->left);
+            }
+            if(last->right)
+            {
+                q.push(last->right);
+            }
+        }
+
+        return last;
+    }
+
+    void donwHeapify(HeapNode* he)
+    {
+        HeapNode* largest = he;
+
+        if( he->left && he->left->data > largest->data)
+        {
+            largest = he->left;
+        }
+
+        if(he->right && he->right->data > largest->data)
+        {
+            largest = he->right;
+        }
+
+        if(largest != he)
+        {
+            swap(largest->data,he->data);
+            donwHeapify(largest);
+        }
+    }
+    void remove()
+    {
+        if(isEmpty())
+        {
+            cout<<"Heap is empty\n";
+            return;
+        }
+        cout<<"Deleting: "<<root->data<<endl;
+    
+
+        HeapNode* last = lastnode();
+        if(last == root)
+        {
+            delete last;
+            root = NULL;
+            return;
+        }
+        swap(root->data, last->data);
+        HeapNode* pr = last->parent;
+
+        if(pr->left == last)
+        {
+            delete last;
+            pr->left = NULL;
+        }
+        else{
+            delete last;
+            pr->right = NULL;
+        }
+
+        donwHeapify(root);
+
+    }
+
+};
+int main() {
+    Heap h;
+    h.add(50);
+    h.add(70);
+    h.add(56);
+    h.add(58);
+    h.add(89);
+    h.add(46);
+    h.add(9);
+    h.remove();
+    h.remove();
+    h.remove();
+    h.remove();
+    h.remove();
+    h.print();
+}

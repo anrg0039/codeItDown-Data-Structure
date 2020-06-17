@@ -1,0 +1,174 @@
+#include <iostream>
+using namespace std;
+class TreeNode{
+    public:
+    int data;
+    TreeNode* left;
+    TreeNode* right;
+    TreeNode(int data)
+    {
+        this->data = data;
+        this->left = NULL;
+        this->right = NULL;
+    }
+};
+
+class BST{
+    TreeNode* root;
+    public:
+    BST()
+    {
+        root = NULL;
+    }
+
+    TreeNode* newnode(int data)
+    {
+        TreeNode* newn = new TreeNode(data);
+        return newn;
+    }
+    TreeNode* insert(TreeNode* root, int data)
+    {
+        if(root == NULL)
+        {
+            return newnode(data);
+        }
+        if(root->data > data)
+        {
+           root->left = insert(root->left, data);
+        }else if(root->data < data){
+            root->right = insert(root->right, data);
+        }
+        return root;
+
+    }
+    void add(int data)
+    {
+        cout<<"Inserting: "<<data<<endl;
+       root = insert(root,data);
+        // if(root == NULL)
+        // {
+        //     root = newnode(data);
+        //     return;
+        // }    
+        // TreeNode* temp = root;
+        // TreeNode* prev = root;
+
+        // while(temp)
+        // {
+        //     prev = temp;
+        //     if(temp->data > data)
+        //     {
+        //         temp = temp->left;
+        //     }
+        //    else if(temp->data < data )
+        //     {
+        //         temp = temp->right;
+        //     }
+        // } 
+
+        // if(prev->data < data)
+        // {
+        //     prev->right = newnode(data);
+        //     return;
+        // }else{
+        //     prev->left = newnode(data);
+            
+        // }
+        
+    }
+    void inorder(TreeNode* root)
+    {
+        if(root == NULL)
+        {
+            return;
+        }
+        inorder(root->left);
+        cout<<root->data<<" ";
+        inorder(root->right);
+    }
+    void print()
+    {
+    cout<<"Inorder Traversal: ";
+    inorder(root);
+    }
+    TreeNode* inorderSuc(TreeNode* root)
+    {
+        while(root && root->left)
+        {
+            root = root->left;
+        }
+        return root;
+    }
+    TreeNode* deleteBST(TreeNode* root, int data)
+    {
+        if(root == NULL)
+        {
+            return root;
+        }
+
+        if(root->data > data)
+        {
+            root->left = deleteBST(root->left, data);
+        }else if(root->data < data)
+        {
+            root->right = deleteBST(root->right, data);
+        }
+        else{
+          //  cout<<"Deleting: "<<data<<"\n";
+        
+            if(root->left == NULL)
+            {
+                TreeNode* temp = root->right;
+                delete root;
+                return temp;
+            }
+
+            if(root->right == NULL)
+            {
+                TreeNode* temp = root->left;
+                delete root;
+                return temp;
+            }
+
+            TreeNode* suc = inorderSuc(root->right);
+
+            root->data = suc->data;
+            root->right = deleteBST(root->right, suc->data);
+        }
+        return root;
+
+    }
+    void remove(int data)
+    {
+       root = deleteBST(root, data);
+    }
+    int height1(TreeNode* root)
+    {
+        if(root == NULL)
+        {
+            return 0;
+        }
+        int l = height1(root->left);
+        int r = height1(root->right);
+        return max(l,r)+1;
+    }
+void height()
+    {
+        cout<<"Height of the tree: "<<height1(root)<<endl;
+    }
+};
+int main() {
+    BST b;
+    b.add(10);
+    b.add(5);
+    b.add(225);
+    b.add(100);
+    b.add(8);
+    b.add(20);
+    b.add(25);
+    b.add(30);
+    // b.remove(10);
+    // b.remove(8);
+    b.height();
+    b.print();
+}

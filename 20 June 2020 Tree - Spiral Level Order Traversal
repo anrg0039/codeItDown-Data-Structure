@@ -1,0 +1,136 @@
+#include <bits/stdc++.h>
+using namespace std;
+class TreeNode{
+    public:
+    int data;
+    TreeNode* left;
+    TreeNode* right;
+    TreeNode(int data)
+    {
+        this->data = data;
+        this->left = NULL;
+        this->right = NULL;
+    }
+};
+class Tree{
+    TreeNode* root;
+    public:
+    Tree()
+    {
+        root = NULL;
+    }
+    TreeNode* newnode(int data)
+    {
+        TreeNode* newn = new TreeNode(data);
+        return newn;
+    }
+    TreeNode* insertBST(TreeNode* root, int data)
+    {
+        if(root == NULL)
+        {
+            return newnode(data);
+        }
+        if(root->data > data)
+        {
+            root->left = insertBST(root->left, data);
+        }
+        else
+    {
+        root->right = insertBST(root->right, data);
+    }
+    return root;
+    }
+    void add(int data)
+    {
+        root = insertBST(root, data);
+    }
+    void inorder(TreeNode* root)
+    {
+        if(root == NULL)
+        {
+            return;
+        }
+        inorder(root->left);
+        cout<<root->data<<" ";
+        inorder(root->right);
+    }
+    void spiral(TreeNode* root)
+    {
+        if(root == NULL)
+        {
+            cout<<"Tree is empty\n";
+            return;
+        }
+        queue<TreeNode*> q;
+        q.push(root);
+        int flag = 0;
+        while(!q.empty())
+        {
+            int n = q.size();
+            stack<int> st;
+
+            for(int i=0;i<n;i++)
+            {
+                TreeNode* temp = q.front();
+                q.pop();
+                if(flag == 0)
+                {
+                    cout<<temp->data<<" ";
+                }
+                else
+                {
+                    st.push(temp->data);
+
+                }
+                if(temp->left)
+                {
+                    q.push(temp->left);
+                }
+                if(temp->right)
+                {
+
+                    q.push(temp->right);
+                }
+            }
+           
+            if(flag == 1)
+            {
+                while(!st.empty())
+                {
+                    cout<<st.top()<<" ";
+                    st.pop();
+                }
+            }
+             cout<<"\n";
+            if(flag == 0)
+            {
+                flag =1;
+            }else{
+                flag =0;
+            }
+        }
+    }
+    
+    void print()
+    {
+        cout<<"Printing Inorder Traversal: ";
+        inorder(root);
+        cout<<"\n";
+        cout<<"Priting Level Order Spiral Form: \n";
+        spiral(root);
+        
+    }
+};
+int main() {
+    Tree t;
+    t.add(25);
+    t.add(20);
+    t.add(50);
+    t.add(46);
+    t.add(21);
+    t.add(9);
+    t.add(10);
+    t.add(8);
+    t.add(60);
+    t.print();
+}

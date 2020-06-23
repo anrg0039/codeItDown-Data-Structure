@@ -1,0 +1,93 @@
+#include <bits/stdc++.h>
+using namespace std;
+void addedge(int mat[6][6],int st,int end,bool bi = true)
+{
+    mat[st][end]=1;
+    if(bi)
+    mat[end][st]=1;
+}
+void print(int mat[6][6])
+{
+    cout<<"  ";
+    for(int i=0;i<6;i++)
+    {
+        cout<<i<<" ";
+    }
+    cout<<endl;
+    for(int i=0;i<6;i++)
+    {
+        cout<<i<<" ";
+        for(int j=0;j<6;j++)
+        {
+        cout<<mat[i][j]<<" ";   
+        }
+        cout<<"\n";     
+    }
+
+}
+void addedgeV(vector<int> v[6],int st,int end,bool bi = true)
+{
+    v[st].push_back(end);
+    if(bi)
+    v[end].push_back(st);
+}
+
+void printV(vector<int> v[6])
+{
+    for(int i=0;i<6;i++)
+    {
+        cout<<i<<"->";
+       // for(int j=0;j<v[i].size();i++)
+       for(int x:v[i])
+       {
+           cout<<x<<", ";
+       }
+       cout<<"\n";
+    }
+}
+int main() {
+    int mat[6][6];
+    memset(mat,0,sizeof(mat));
+    addedge(mat,0,2);
+    addedge(mat,0,1);
+    addedge(mat,5,2);
+    addedge(mat,1,3,0);
+    addedge(mat,3,4,false);
+    addedge(mat,4,1,false);
+
+    vector<int> v[6];
+    addedgeV(v,0,2);
+    addedgeV(v,0,1);
+    addedgeV(v,5,2);
+    addedgeV(v,1,3,0);
+    addedgeV(v,3,4,0);
+    addedgeV(v,4,1,0);
+    print(mat);
+    printV(v);
+
+
+    unordered_map<int,vector<int>> map;
+   
+ 
+
+
+}
+
+
+//   0 1 2 3 4 5
+// 0 0 1 1 0 0 0 
+// 1 1 0 0 1 1 0
+// 2 1 0 0 0 0 0
+// 3 0 1 0 0 0 1
+// 4 0 1 0 0 0 1
+// 5 0 0 0 1 1 0
+
+
+// 0 -- 1,2
+// 1 -- 0,3,4
+// 2 -- 0
+// 3 -- 1,5
+// 4 -- 1,5
+// 5 -- 3,4
+
+

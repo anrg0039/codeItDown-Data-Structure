@@ -1,0 +1,150 @@
+//Matrix
+#include <iostream>
+using namespace std;
+void addedge(int mat[][8], int st, int end, bool bi = true)
+{
+    mat[st][end]= 1;
+    if(bi)
+    {
+        mat[end][st] = 1;
+    }
+}
+void print(int mat[][8])
+{
+    int n=8;
+    cout<<"  ";
+    for(int i=0;i<n;i++)
+    {
+        cout<<i<<" ";
+    }
+    cout<<"\n";
+    for(int i=0;i<n;i++)
+    {
+        cout<<i<<" ";
+        for(int j=0;j<n;j++)
+        {
+            cout<<mat[i][j]<<" ";
+        }
+        cout<<"\n";
+    }
+}
+
+void DFS(int mat[][8],bool visited[8],int st)
+{
+    cout<<st<<" ";
+    visited[st] = true;
+
+    for(int i=0;i<8;i++)
+    {
+        if(mat[st][i] == 1)
+        {
+            if(!visited[i])
+            {
+                DFS(mat,visited,i);
+            }
+        }
+    }
+}
+
+int main() {
+    int mat[8][8];
+    memset(mat,0,sizeof(mat));
+    addedge(mat,0,1);
+    addedge(mat,1,2);
+    addedge(mat,2,3);
+    addedge(mat,1,4);
+    addedge(mat,4,5);
+    addedge(mat,5,6);
+    addedge(mat,5,7);
+    print(mat);
+    bool visited[8] ={false};
+    cout<<"DFS Traversal: ";
+    DFS(mat,visited,1);
+
+}
+
+
+//Map
+#include <bits/stdc++.h>
+using namespace std;
+class Graph{
+    unordered_map<int, vector<int>> map;
+    public:
+    void add(int st, int end, bool bi = true)
+    {
+        map[st].push_back(end);
+        if(bi)
+        {
+            map[end].push_back(st);
+        }
+    }
+
+void DFS(unordered_map<int,bool> &visited,int st)
+{
+    cout<<st<<" ";
+    visited[st] = true;
+    for(auto x: map[st])
+    {
+        if(!visited[x])
+        {
+            DFS(visited,x);
+        }
+    }
+}
+void BFS(int st)
+{
+    queue<int> q;
+    q.push(st);
+    unordered_map<int,bool> visited;
+
+    while(!q.empty())
+    {
+        int a = q.front();
+        q.pop();
+        cout<<a<<" ";
+        visited[a] = true;
+        for(auto x: map[a])
+        {
+            if(!visited[x])
+            {
+                q.push(x);
+            }
+        }
+    }
+}
+void traversal()
+{
+    cout<<"Printing DSF Traversal: ";
+    unordered_map<int,bool> visited; 
+    DFS(visited,1);
+    cout<<"\nPrinting BFS Traversal: ";
+    BFS(0);
+}
+
+    void print()
+    {
+        cout<<"Printing the data of the graph: \n";
+        for(auto x:map)
+        {
+            cout<<x.first<<"-> ";
+            for(int y:x.second)
+            {
+                cout<<y<<", ";
+            }
+            cout<<"\n";
+        }
+    }
+};
+int main() {
+    Graph g;
+    g.add(0,1);
+    g.add(1,2);
+    g.add(2,3);
+    g.add(4,1);
+    g.add(4,5);
+    g.add(5,6);
+    g.add(5,7);
+    g.print();
+    g.traversal();
+
+}

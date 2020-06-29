@@ -1,0 +1,138 @@
+//Basics Of Recursion
+
+#include <iostream>
+using namespace std;
+void fun(int num)
+{
+    if(num <1)
+    {
+        return;
+    }
+    
+    cout<<num<<" ";
+    fun(num-1);
+}
+
+long long int factorial(int num)
+{
+    if(num<=1)
+    {
+        return 1;
+    }
+    return num* factorial(num-1);
+    
+}
+int fibo(int arr[],int num)
+{
+    if(num <=2)
+    {
+        return 1;
+    }
+    if(arr[num]==-1)
+    {
+        int k = fibo(arr,num-1)+fibo(arr,num-2);
+        arr[num] = k;
+        return k;
+    }else
+    {
+        return arr[num];
+    }
+    
+}
+int main() {
+    fun(5);
+    cout<<"\nFactorial "<<factorial(20);
+    int arr[8];
+    memset(arr, -1, sizeof(arr));
+    cout<<"\nFibbonacci term "<<fibo(arr,6);
+
+}
+
+
+//Menge Sort
+
+#include <iostream>
+using namespace std;
+
+void print(int arr[], int size)
+{
+    cout<<"Printing the elements of the array: ";
+    for(int i=0;i<size;i++)
+    {
+        cout<<arr[i]<<" ";
+    }
+    cout<<endl;
+}
+
+void merge(int arr[], int left, int right, int m)
+{
+    int size1 = m-left+1;
+    int size2 = right-m;
+    int arr1[size1],arr2[size2];
+    for(int i=0;i<size1;i++)
+    {
+        arr1[i] = arr[i+left];
+    }
+
+    for(int i=0;i<size2;i++)
+    {
+        arr2[i] = arr[m+1+i];
+    }
+
+    int i=0,j=0,k=left;
+    while(i<size1 && j<size2)
+    {
+        if(arr1[i]<arr2[j])
+        {
+            arr[k] = arr1[i];
+            i++;
+            k++;
+        }else
+        {
+            arr[k] = arr2[j];
+            j++;
+            k++;
+        }
+    }
+
+    while(i<size1)
+    {
+        arr[k] = arr1[i];
+        i++;
+        k++;
+    }
+
+    while(j<size2)
+    {
+        arr[k] = arr2[j];
+        j++;
+        k++;
+    }
+}
+void mergesort(int arr[], int left, int right)
+{
+    if (left < right)
+    {
+    int m = (left + right)/2;
+
+    mergesort(arr, left, m);
+    mergesort(arr, m+1, right);
+
+    merge(arr,left, right, m);
+    }
+
+}
+int main() {
+    int arr[] = {17, 25, 16, 7, 9,48, 49, 2, 42,100,105,6,8,8,95,45};
+    int size = sizeof(arr)/sizeof(arr[0]);
+    print(arr,size);
+
+    mergesort(arr, 0 , size-1);
+
+    print(arr,size);
+
+
+
+}
+
+

@@ -1,0 +1,47 @@
+//Recusion Matrix Traversal
+#include <iostream>
+using namespace std;
+#define N 3
+#define M 4
+int traversemat(int mat[N][M], int row,int col)
+{
+    if(row>=N)
+    {
+        return 1;
+    }
+    if(col>=M)
+    {
+        return 0;
+    }
+
+    cout<<mat[row][col]<<" ";
+   if( traversemat(mat,row,col+1)==1)
+   {
+       return 1;
+   }
+   cout<<"\n";
+  return traversemat(mat,row+1,0);
+}
+int main() {
+    
+    int mat[N][M] = {{1,2,3,4},{5,6,7,8},{9,10,11,12}};
+    traversemat(mat,0,0);
+}
+
+//Recusion Tower Of Hanoi
+#include <iostream>
+using namespace std;
+void TOH(int n,char A,char B,char C)
+{
+    if(n==1)
+    {
+        cout<<"Move disk "<<n<<" from "<<A<<" to "<<B<<endl;
+        return;
+    }
+    TOH(n-1,A,C,B);
+    cout<<"Move disk "<<n<<" from "<<A<<" to "<<B<<endl;
+    TOH(n-1,C,B,A);
+}
+int main() {
+    TOH(3,'A','B','C');
+}
